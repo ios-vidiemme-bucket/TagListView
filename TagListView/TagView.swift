@@ -52,7 +52,7 @@ open class TagView: UIButton {
     }
     @IBInspectable open var paddingX: CGFloat = 5 {
         didSet {
-            titleEdgeInsets.left = paddingX
+            titleEdgeInsets.right = paddingX
             updateRightInsets()
         }
     }
@@ -173,6 +173,8 @@ open class TagView: UIButton {
         frame.size = intrinsicContentSize
         addSubview(removeButton)
         removeButton.tagView = self
+        removeButton.backgroundColor = #colorLiteral(red: 1, green: 0.1490196078, blue: 0, alpha: 1)
+        removeButton.clipsToBounds = true
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
         self.addGestureRecognizer(longPress)
@@ -192,27 +194,28 @@ open class TagView: UIButton {
             size.width = size.height
         }
         if enableRemoveButton {
-            size.width += removeButtonIconSize + paddingX
+            size.width += size.height
         }
         return size
     }
     
     private func updateRightInsets() {
         if enableRemoveButton {
-            titleEdgeInsets.right = paddingX  + removeButtonIconSize + paddingX
+            titleEdgeInsets.left = bounds.height + paddingX
         }
         else {
-            titleEdgeInsets.right = paddingX
+            titleEdgeInsets.left = paddingX
         }
     }
     
     open override func layoutSubviews() {
         super.layoutSubviews()
         if enableRemoveButton {
-            removeButton.frame.size.width = paddingX + removeButtonIconSize + paddingX
-            removeButton.frame.origin.x = self.frame.width - removeButton.frame.width
-            removeButton.frame.size.height = self.frame.height
-            removeButton.frame.origin.y = 0
+            removeButton.frame.size.width = bounds.height - 6
+            removeButton.frame.origin.x = 3
+            removeButton.frame.size.height = bounds.height - 6
+            removeButton.frame.origin.y = 3
+            removeButton.layer.cornerRadius = removeButton.bounds.size.width/2
         }
     }
 }
