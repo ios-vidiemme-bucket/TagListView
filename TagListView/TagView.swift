@@ -173,7 +173,7 @@ open class TagView: UIButton {
         frame.size = intrinsicContentSize
         addSubview(removeButton)
         removeButton.tagView = self
-        removeButton.backgroundColor = #colorLiteral(red: 1, green: 0.1490196078, blue: 0, alpha: 1)
+        removeButton.backgroundColor = UIColor(red: 1, green: 59/255, blue: 48/255, alpha: 1)
         removeButton.clipsToBounds = true
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
