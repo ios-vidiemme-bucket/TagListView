@@ -18,6 +18,7 @@ class ViewController: UIViewController, TagListViewDelegate {
         super.viewDidLoad()
         
         tagListView.delegate = self
+        tagListView.showVertical = true
         tagListView.addTag("TagListView")
         tagListView.addTag("TEAChart")
         tagListView.addTag("To Be Removed")
