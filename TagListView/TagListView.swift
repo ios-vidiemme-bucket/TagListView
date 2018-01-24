@@ -15,7 +15,10 @@ import UIKit
 
 @IBDesignable
 open class TagListView: UIView {
+    
     public var showVertical:Bool = false
+    
+    public var editableTagDelegate : EditableTagViewDelegate?
     
     
     @IBInspectable open dynamic var textColor: UIColor = UIColor.white {
@@ -155,6 +158,8 @@ open class TagListView: UIView {
         }
     }
     
+    // MARK: remove button
+    
     @IBInspectable open dynamic var enableRemoveButton: Bool = false {
         didSet {
             for tagView in tagViews {
@@ -210,6 +215,33 @@ open class TagListView: UIView {
             invalidateIntrinsicContentSize()
         }
     }
+    
+    var linkedClients: [String] = ["Client name"]
+    
+    open func addClient(client: String) {
+        if (linkedClients.contains(where: { $0 == "Client name" })) {
+            linkedClients.removeAll()
+        }
+        
+        linkedClients.append(client)
+        
+        rearrangeViews()
+    }
+    
+    open func removeClient(client: String) {
+        if let index = linkedClients.index(where: {$0 == client}) {
+            linkedClients.remove(at: index)
+            
+            if (linkedClients.count == 0) {
+                linkedClients.append("Client name")
+            }
+        }
+        
+        rearrangeViews()
+    }
+    
+    var bottomView: UIView = UIView()
+    var editableTagView: EditableTagView = EditableTagView()
     
     // MARK: - Interface Builder
     
@@ -282,6 +314,37 @@ open class TagListView: UIView {
         }
         rows = currentRow
         
+        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: UIScreen.main.bounds.size.height - 49.0 - 98.0)
+        
+        editableTagView.removeFromSuperview()
+        editableTagView = EditableTagView(frame: CGRect(x: 0.0, y: tagViewHeight * CGFloat(rows) + marginY, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count)), linkedClients: linkedClients)
+        editableTagView.isHidden = !enableRemoveButton
+        editableTagView.delegate = editableTagDelegate
+        addSubview(editableTagView)
+        
+        bottomView.removeFromSuperview()
+        bottomView = UIView(frame: CGRect(x: 0.0, y: frame.size.height - tagViewHeight, width: self.bounds.width, height: tagViewHeight))
+        bottomView.isHidden = !enableRemoveButton
+        
+        let addButton = AddButton()
+        addButton.frame = CGRect(x: 0.0, y: 3.0, width: tagViewHeight - 6.0, height: tagViewHeight - 6.0)
+        addButton.layer.cornerRadius = addButton.frame.size.width / 2
+        addButton.lineWidth = removeIconLineWidth
+        addButton.iconSize = removeButtonIconSize
+        addButton.isHidden = !enableRemoveButton
+        addButton.lineColor = removeIconLineColor
+        addButton.backgroundColor = UIColor(red: 0, green: 228/255, blue: 103/255, alpha: 1)
+        addButton.clipsToBounds = true
+        bottomView.addSubview(addButton)
+        
+        let addTagLabel = UILabel(frame: CGRect(x: tagViewHeight + 8.0, y: 3.0, width: bounds.size.width - tagViewHeight - 16.0, height: tagViewHeight - 6.0))
+        addTagLabel.text = "Add Tag"
+        addTagLabel.textColor = UIColor.black
+        addTagLabel.isHidden = !enableRemoveButton
+        bottomView.addSubview(addTagLabel)
+        
+        addSubview(bottomView)
+        
         invalidateIntrinsicContentSize()
     }
     
@@ -328,6 +391,7 @@ open class TagListView: UIView {
         return tagView
     }
 
+    
     @discardableResult
     open func addTag(_ title: String) -> TagView {
         return addTagView(createNewTagView(title))
