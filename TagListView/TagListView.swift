@@ -18,6 +18,8 @@ import UIKit
 open class TagListView: UIView {
     
     public var showVertical:Bool = false
+    var addingTag = false
+    var tempTag: String?
     
     public var editableTagDelegate : EditableTagViewDelegate?
     
@@ -320,7 +322,9 @@ open class TagListView: UIView {
         editableTagView.removeFromSuperview()
         editableTagView = EditableTagView(frame: CGRect(x: 0.0, y: tagViewHeight * CGFloat(rows) + marginY, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count)), linkedClients: linkedClients)
         editableTagView.delegate = editableTagDelegate
-        editableTagView.isHidden = true
+        editableTagView.isHidden = !addingTag
+        editableTagView.textfield.delegate = self
+        editableTagView.textfield.text = tempTag
         addSubview(editableTagView)
         
         bottomView.removeFromSuperview()
@@ -355,6 +359,7 @@ open class TagListView: UIView {
     @objc func bottomViewTapped() {
         editableTagView.isHidden = false
         editableTagView.textfieldResignFirstResponder()
+        addingTag = true
     }
     
     // MARK: - Manage tags
@@ -497,5 +502,12 @@ open class TagListView: UIView {
         if let tagView = closeButton.tagView {
             delegate?.tagRemoveButtonPressed?(tagView.currentTitle ?? "", tagView: tagView, sender: self)
         }
+    }
+}
+
+extension TagListView : UITextFieldDelegate {
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        self.tempTag = textField.text
     }
 }
