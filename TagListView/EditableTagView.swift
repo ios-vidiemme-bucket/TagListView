@@ -19,6 +19,8 @@ open class EditableTagView: UIView {
     
     var delegate : EditableTagViewDelegate?
     
+    var textfield: UITextField = UITextField()
+    
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,7 +49,7 @@ open class EditableTagView: UIView {
         closeButton.clipsToBounds = true
         addSubview(closeButton)
         
-        let textfield = UITextField(frame: CGRect(x: 40.0, y: 4.0, width: frame.size.width / 2 - 36.0, height: 20.0))
+        textfield = UITextField(frame: CGRect(x: 40.0, y: 4.0, width: frame.size.width / 2 - 36.0, height: 20.0))
         textfield.placeholder = "Tag name"
         
         let separatorView = UIView()
@@ -98,6 +100,10 @@ open class EditableTagView: UIView {
         }
         
         addSubview(textfield)
+    }
+    
+    public func textfieldResignFirstResponder() {
+        textfield.resignFirstResponder()
     }
     
     // notify the delegate that the stack view has been tapped

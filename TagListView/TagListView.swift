@@ -354,9 +354,7 @@ open class TagListView: UIView {
     
     @objc func bottomViewTapped() {
         editableTagView.isHidden = false
-        editableTagView.resignFirstResponder()
-        
-        delegate?.addButtonPressed!()
+        editableTagView.textfieldResignFirstResponder()
     }
     
     // MARK: - Manage tags
