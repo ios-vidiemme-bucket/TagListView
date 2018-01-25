@@ -11,6 +11,7 @@ import UIKit
 @objc public protocol TagListViewDelegate {
     @objc optional func tagPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void
     @objc optional func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void
+    @objc optional func addButtonPressed() -> Void
 }
 
 @IBDesignable
@@ -318,8 +319,8 @@ open class TagListView: UIView {
         
         editableTagView.removeFromSuperview()
         editableTagView = EditableTagView(frame: CGRect(x: 0.0, y: tagViewHeight * CGFloat(rows) + marginY, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count)), linkedClients: linkedClients)
-        editableTagView.isHidden = !enableRemoveButton
         editableTagView.delegate = editableTagDelegate
+        editableTagView.isHidden = true
         addSubview(editableTagView)
         
         bottomView.removeFromSuperview()
@@ -343,9 +344,19 @@ open class TagListView: UIView {
         addTagLabel.isHidden = !enableRemoveButton
         bottomView.addSubview(addTagLabel)
         
+        let bottomViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(bottomViewTapped))
+        bottomView.addGestureRecognizer(bottomViewTapGesture)
+        
         addSubview(bottomView)
         
         invalidateIntrinsicContentSize()
+    }
+    
+    @objc func bottomViewTapped() {
+        editableTagView.isHidden = false
+        editableTagView.resignFirstResponder()
+        
+        delegate?.addButtonPressed!()
     }
     
     // MARK: - Manage tags
