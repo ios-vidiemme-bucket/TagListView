@@ -103,7 +103,7 @@ open class EditableTagView: UIView {
     }
     
     public func textfieldResignFirstResponder() {
-        textfield.becomeFirstResponder()()
+        textfield.becomeFirstResponder()
     }
     
     // notify the delegate that the stack view has been tapped
