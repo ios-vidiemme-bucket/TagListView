@@ -15,19 +15,43 @@ public protocol EditableTagViewDelegate {
 @IBDesignable
 open class EditableTagView: UIView {
     
-    var linkedClients: [String] = []
+    var linkedClients: [String] = [] {
+        didSet {
+            
+            for view in subviews {
+                if #available(iOS 9.0, *) {
+                    if (view is UIStackView) {
+                        view.removeFromSuperview()
+                    }
+                } else {
+                    // Fallback on earlier versions
+                }
+            }
+            
+            setupViews()
+        }
+    }
     
     var delegate : EditableTagViewDelegate?
     
     var textfield: UITextField = UITextField()
     
     
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        textfield = UITextField(frame: CGRect(x: 40.0, y: 4.0, width: UIScreen.main.bounds.size.width / 2 - 76.0, height: 20.0))
+        textfield.placeholder = "Tag name"
+        addSubview(textfield)
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        textfield = UITextField(frame: CGRect(x: 40.0, y: 4.0, width: UIScreen.main.bounds.size.width / 2 - 76.0, height: 20.0))
+        textfield.placeholder = "Tag name"
+        addSubview(textfield)
     }
     
     public init(frame: CGRect, linkedClients: [String]) {
@@ -35,12 +59,16 @@ open class EditableTagView: UIView {
     
         self.linkedClients = linkedClients
         
+        textfield = UITextField(frame: CGRect(x: 40.0, y: 4.0, width: frame.size.width / 2 - 36.0, height: 20.0))
+        textfield.placeholder = "Tag name"
+        addSubview(textfield)
+        
         setupViews()
     }
     
     private func setupViews() {
         let closeButton = CloseButton()
-        closeButton.frame = CGRect(x: 2.0, y: 2.0, width: 24.0, height: 24.0)
+        closeButton.frame = CGRect(x: 4.0, y: 2.0, width: 24.0, height: 24.0)
         closeButton.layer.cornerRadius = closeButton.frame.size.width / 2
         closeButton.lineWidth = 1
         closeButton.iconSize = 12
@@ -49,22 +77,18 @@ open class EditableTagView: UIView {
         closeButton.clipsToBounds = true
         addSubview(closeButton)
         
-        textfield = UITextField(frame: CGRect(x: 40.0, y: 4.0, width: frame.size.width / 2 - 36.0, height: 20.0))
-        textfield.placeholder = "Tag name"
-        
         let separatorView = UIView()
         separatorView.frame = CGRect(x: center.x - 0.5, y: 1.0, width: 1.0, height: frame.size.height - 2.0)
         separatorView.center.x = center.x
         separatorView.backgroundColor = UIColor.init(red: 238/255, green: 238/255, blue: 238/255, alpha: 1)
         addSubview(separatorView)
         
-        let accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "client_disclosure"))
+        let accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "gray_disclosure"))
         accessoryImageView.frame.origin = CGPoint(x: frame.size.width - accessoryImageView.frame.size.width, y: 8.0)
         addSubview(accessoryImageView)
         
         if #available(iOS 9.0, *) {
-            let stackView   = UIStackView()
-            
+            let stackView = UIStackView()
             stackView.axis = UILayoutConstraintAxis.vertical
             stackView.distribution = UIStackViewDistribution.equalSpacing
             stackView.alignment = UIStackViewAlignment.top
@@ -98,12 +122,15 @@ open class EditableTagView: UIView {
             // TODO: Fallback on earlier versions
             // no need for this, no one is using iOS 8.0
         }
-        
-        addSubview(textfield)
+    }
+    
+    public func textfieldBecomeFirstResponder() {
+        textfield.becomeFirstResponder()
     }
     
     public func textfieldResignFirstResponder() {
-        textfield.becomeFirstResponder()
+        textfield.resignFirstResponder()
+        // endEditing(true)
     }
     
     // notify the delegate that the stack view has been tapped

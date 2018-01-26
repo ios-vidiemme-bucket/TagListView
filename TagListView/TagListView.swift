@@ -228,6 +228,8 @@ open class TagListView: UIView {
         
         linkedClients.append(client)
         
+        editableTagView.linkedClients = linkedClients
+        
         rearrangeViews()
     }
     
@@ -240,11 +242,13 @@ open class TagListView: UIView {
             }
         }
         
+        editableTagView.linkedClients = linkedClients
+        
         rearrangeViews()
     }
     
-    var bottomView: UIView = UIView()
-    var editableTagView: EditableTagView = EditableTagView()
+    public var bottomView: UIView = UIView()
+    public var editableTagView: EditableTagView = EditableTagView()
     
     // MARK: - Interface Builder
     
@@ -258,8 +262,6 @@ open class TagListView: UIView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        
-        rearrangeViews()
     }
     
     private func rearrangeViews() {
@@ -317,22 +319,30 @@ open class TagListView: UIView {
         }
         rows = currentRow
         
-        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: UIScreen.main.bounds.size.height - 49.0 - 98.0)
+        //if addingTag == false {
+            //editableTagView.removeFromSuperview()
+        editableTagView.frame = CGRect(x: 0.0, y: (tagViewHeight + marginY) * CGFloat(tagViews.count) + 16.0, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count))
+            editableTagView.linkedClients = linkedClients
+            editableTagView.delegate = editableTagDelegate
+            editableTagView.isHidden = !addingTag
+            editableTagView.textfield.delegate = self
+            editableTagView.textfield.text = tempTag
         
-        editableTagView.removeFromSuperview()
-        editableTagView = EditableTagView(frame: CGRect(x: 0.0, y: tagViewHeight * CGFloat(rows) + marginY, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count)), linkedClients: linkedClients)
-        editableTagView.delegate = editableTagDelegate
-        editableTagView.isHidden = !addingTag
-        editableTagView.textfield.delegate = self
-        editableTagView.textfield.text = tempTag
-        addSubview(editableTagView)
+        if editableTagView.isDescendant(of: self) == false {
+            addSubview(editableTagView)
+        }
+        
+        /*}
+        else {
+            editableTagView.linkedClients = linkedClients
+        }*/
         
         bottomView.removeFromSuperview()
-        bottomView = UIView(frame: CGRect(x: 0.0, y: frame.size.height - tagViewHeight, width: self.bounds.width, height: tagViewHeight))
+        bottomView = UIView(frame: CGRect(x: 0.0, y: ((tagViewHeight + marginY) * CGFloat(tagViews.count)) + editableTagView.frame.size.height + 32.0, width: self.bounds.width, height: tagViewHeight))
         bottomView.isHidden = !enableRemoveButton
         
         let addButton = AddButton()
-        addButton.frame = CGRect(x: 0.0, y: 3.0, width: tagViewHeight - 6.0, height: tagViewHeight - 6.0)
+        addButton.frame = CGRect(x: 4.0, y: 3.0, width: tagViewHeight - 6.0, height: tagViewHeight - 6.0)
         addButton.layer.cornerRadius = addButton.frame.size.width / 2
         addButton.lineWidth = removeIconLineWidth
         addButton.iconSize = removeButtonIconSize
@@ -353,13 +363,17 @@ open class TagListView: UIView {
         
         addSubview(bottomView)
         
+        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: ((tagViewHeight + marginY) * CGFloat(tagViews.count)) + editableTagView.frame.size.height + bottomView.frame.size.height + 40.0)
+        
         invalidateIntrinsicContentSize()
     }
     
     @objc func bottomViewTapped() {
         editableTagView.isHidden = false
-        editableTagView.textfieldResignFirstResponder()
+        editableTagView.textfieldBecomeFirstResponder()
         addingTag = true
+        
+        rearrangeViews()
     }
     
     // MARK: - Manage tags
@@ -369,6 +383,11 @@ open class TagListView: UIView {
         if rows > 0 {
             height -= marginY
         }
+        
+        if bottomView.isHidden == false {
+            height += (editableTagView.frame.size.height + 20.0 + bottomView.frame.size.height + 20.0)
+        }
+        
         return CGSize(width: frame.width, height: height)
     }
     
