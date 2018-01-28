@@ -39,7 +39,7 @@ open class TagView: UIButton {
             reloadStyles()
         }
     }
-    @IBInspectable open var titleLineBreakMode: NSLineBreakMode = .byTruncatingMiddle {
+    @IBInspectable open var titleLineBreakMode: NSLineBreakMode = .byClipping {
         didSet {
             titleLabel?.lineBreakMode = titleLineBreakMode
         }

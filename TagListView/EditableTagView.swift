@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol EditableTagViewDelegate {
-    func didTapLinkClient()
+    func didTapLinkClient(tag: String?)
 }
 
 @IBDesignable
@@ -135,7 +135,7 @@ open class EditableTagView: UIView {
     
     // notify the delegate that the stack view has been tapped
     @objc func stackViewTapped() {
-        delegate?.didTapLinkClient()
+        delegate?.didTapLinkClient(tag: textfield.text)
     }
 }
 
