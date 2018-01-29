@@ -20,7 +20,8 @@ open class TagListView: UIView {
     public var showVertical:Bool = false
     public var addingTag = false
     public var canShowAddButton = false
-    var tempTag: String?
+    public var tempTag: String?
+    public var addTagLabel: String = ""
     
     public var editableTagDelegate : EditableTagViewDelegate?
     
@@ -354,7 +355,7 @@ open class TagListView: UIView {
             bottomView.addSubview(addButton)
         
             let addTagLabel = UILabel(frame: CGRect(x: tagViewHeight + 8.0, y: 3.0, width: bounds.size.width - tagViewHeight - 16.0, height: tagViewHeight - 6.0))
-            addTagLabel.text = "Add Tag"
+            addTagLabel.text = self.addTagLabel
             addTagLabel.textColor = UIColor.black
             addTagLabel.isHidden = !enableRemoveButton
             bottomView.addSubview(addTagLabel)
