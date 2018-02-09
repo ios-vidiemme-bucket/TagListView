@@ -325,30 +325,30 @@ open class TagListView: UIView {
             tagViewHeight = 31
         }
         
-        let originY = tagViews.count == 0 ? (tagViewHeight + marginY) * CGFloat(1) : (tagViewHeight + marginY) * CGFloat(tagViews.count)
-        
-        editableTagView.frame = CGRect(x: 0.0, y: tagViews.count == 0 ? 0.0 : originY + 16.0, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count))
-        editableTagView.linkedClients = linkedClients
-        editableTagView.delegate = editableTagDelegate
-        editableTagView.isHidden = !addingTag
-        editableTagView.textfield.delegate = self
-        editableTagView.textfield.text = tempTag
-        
-        if editableTagView.isDescendant(of: self) == false {
-            addSubview(editableTagView)
-        }
-        
         if canShowAddButton {
+            let originY = tagViews.count == 0 ? (tagViewHeight + marginY) * CGFloat(1) : (tagViewHeight + marginY) * CGFloat(tagViews.count)
+            
+            editableTagView.frame = CGRect(x: 0.0, y: tagViews.count == 0 ? 0.0 : originY + 16.0, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count))
+            editableTagView.linkedClients = linkedClients
+            editableTagView.delegate = editableTagDelegate
+            editableTagView.isHidden = !addingTag
+            editableTagView.textfield.delegate = self
+            editableTagView.textfield.text = tempTag
+            
+            if editableTagView.isDescendant(of: self) == false {
+                addSubview(editableTagView)
+            }
+            
             bottomView.removeFromSuperview()
             bottomView = UIView(frame: CGRect(x: 0.0, y: editableTagView.frame.origin.y + editableTagView.frame.size.height + 16.0, width: self.bounds.width, height: tagViewHeight))
-            bottomView.isHidden = !enableRemoveButton
+            //bottomView.isHidden = !enableRemoveButton
         
             let addButton = AddButton()
             addButton.frame = CGRect(x: 4.0, y: 3.0, width: tagViewHeight - 6.0, height: tagViewHeight - 6.0)
             addButton.layer.cornerRadius = addButton.frame.size.width / 2
             addButton.lineWidth = removeIconLineWidth
             addButton.iconSize = removeButtonIconSize
-            addButton.isHidden = !enableRemoveButton
+            //addButton.isHidden = !enableRemoveButton
             addButton.lineColor = removeIconLineColor
             addButton.backgroundColor = UIColor(red: 0, green: 228/255, blue: 103/255, alpha: 1)
             addButton.clipsToBounds = true
@@ -357,7 +357,7 @@ open class TagListView: UIView {
             let addTagLabel = UILabel(frame: CGRect(x: tagViewHeight + 8.0, y: 3.0, width: bounds.size.width - tagViewHeight - 16.0, height: tagViewHeight - 6.0))
             addTagLabel.text = self.addTagLabel
             addTagLabel.textColor = UIColor.black
-            addTagLabel.isHidden = !enableRemoveButton
+            //addTagLabel.isHidden = !enableRemoveButton
             bottomView.addSubview(addTagLabel)
         
             let bottomViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(bottomViewTapped))
@@ -372,6 +372,7 @@ open class TagListView: UIView {
     }
     
     @objc func bottomViewTapped() {
+        delegate?.addButtonPressed!()
         editableTagView.isHidden = false
         editableTagView.textfieldBecomeFirstResponder()
         addingTag = true
@@ -387,7 +388,7 @@ open class TagListView: UIView {
             height -= marginY
         }
         
-        if bottomView.isHidden == false {
+        if canShowAddButton {
             height += (editableTagView.frame.size.height + 20.0 + bottomView.frame.size.height + 20.0)
         }
         
