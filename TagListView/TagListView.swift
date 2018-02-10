@@ -11,7 +11,6 @@ import UIKit
 @objc public protocol TagListViewDelegate {
     @objc optional func tagPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void
     @objc optional func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void
-    @objc optional func addButtonPressed() -> Void
 }
 
 @IBDesignable
@@ -249,6 +248,14 @@ open class TagListView: UIView {
         rearrangeViews()
     }
     
+    open func removeAllClients() {
+        linkedClients.removeAll()
+        
+        linkedClients.append("Client name")
+        editableTagView.linkedClients = linkedClients
+        rearrangeViews()
+    }
+    
     public var bottomView: UIView = UIView()
     public var editableTagView: EditableTagView = EditableTagView()
     
@@ -328,6 +335,7 @@ open class TagListView: UIView {
         if canShowAddButton {
             let originY = tagViews.count == 0 ? (tagViewHeight + marginY) * CGFloat(1) : (tagViewHeight + marginY) * CGFloat(tagViews.count)
             
+            editableTagView.clearSubViews()
             editableTagView.frame = CGRect(x: 0.0, y: tagViews.count == 0 ? 0.0 : originY + 16.0, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count))
             editableTagView.linkedClients = linkedClients
             editableTagView.delegate = editableTagDelegate
@@ -372,7 +380,6 @@ open class TagListView: UIView {
     }
     
     @objc func bottomViewTapped() {
-        delegate?.addButtonPressed!()
         editableTagView.isHidden = false
         editableTagView.textfieldBecomeFirstResponder()
         addingTag = true
@@ -517,6 +524,10 @@ open class TagListView: UIView {
         for view in views {
             view.removeFromSuperview()
         }
+        
+        editableTagView.removeFromSuperview()
+        tempTag = nil
+        removeAllClients()
         tagViews = []
         tagBackgroundViews = []
         rearrangeViews()

@@ -34,8 +34,10 @@ open class EditableTagView: UIView {
     
     var delegate : EditableTagViewDelegate?
     
+    var closeButton: CloseButton = CloseButton()
+    var separatorView: UIView = UIView()
+    var accessoryImageView: UIImageView = UIImageView()
     var textfield: UITextField = UITextField()
-    
     
     
     public required init?(coder aDecoder: NSCoder) {
@@ -67,7 +69,6 @@ open class EditableTagView: UIView {
     }
     
     private func setupViews() {
-        let closeButton = CloseButton()
         closeButton.frame = CGRect(x: 4.0, y: 2.0, width: 24.0, height: 24.0)
         closeButton.layer.cornerRadius = closeButton.frame.size.width / 2
         closeButton.lineWidth = 1
@@ -77,14 +78,13 @@ open class EditableTagView: UIView {
         closeButton.clipsToBounds = true
         addSubview(closeButton)
         
-        let separatorView = UIView()
         separatorView.frame = CGRect(x: center.x - 0.5, y: 1.0, width: 1.0, height: frame.size.height - 2.0)
         separatorView.center.x = center.x
         separatorView.backgroundColor = UIColor.init(red: 238/255, green: 238/255, blue: 238/255, alpha: 1)
         addSubview(separatorView)
         
-        let accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "gray_disclosure"))
-        accessoryImageView.frame.origin = CGPoint(x: frame.size.width - accessoryImageView.frame.size.width, y: 8.0)
+        accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "gray_disclosure"))
+        accessoryImageView.frame.origin = CGPoint(x: UIScreen.main.bounds.size.width - 32.0 - accessoryImageView.frame.size.width, y: 8.0)
         addSubview(accessoryImageView)
         
         if #available(iOS 9.0, *) {
@@ -122,6 +122,12 @@ open class EditableTagView: UIView {
             // TODO: Fallback on earlier versions
             // no need for this, no one is using iOS 8.0
         }
+    }
+    
+    public func clearSubViews() {
+        closeButton.removeFromSuperview()
+        separatorView.removeFromSuperview()
+        accessoryImageView.removeFromSuperview()
     }
     
     public func textfieldBecomeFirstResponder() {
