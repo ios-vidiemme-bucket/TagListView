@@ -10,6 +10,7 @@ import UIKit
 
 public protocol EditableTagViewDelegate {
     func didTapLinkClient(tag: String?)
+    func didTapRemove()
 }
 
 @IBDesignable
@@ -76,6 +77,7 @@ open class EditableTagView: UIView {
         closeButton.lineColor = UIColor.white
         closeButton.backgroundColor = UIColor(red: 1, green: 59/255, blue: 48/255, alpha: 1)
         closeButton.clipsToBounds = true
+        closeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         addSubview(closeButton)
         
         separatorView.frame = CGRect(x: center.x - 0.5, y: 1.0, width: 1.0, height: frame.size.height - 2.0)
@@ -142,6 +144,10 @@ open class EditableTagView: UIView {
     // notify the delegate that the stack view has been tapped
     @objc func stackViewTapped() {
         delegate?.didTapLinkClient(tag: textfield.text)
+    }
+    
+    @objc func removeButtonTapped() {
+        delegate?.didTapRemove()
     }
 }
 
