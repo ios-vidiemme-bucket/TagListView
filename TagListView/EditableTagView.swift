@@ -87,6 +87,8 @@ open class EditableTagView: UIView {
         
         accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "gray_disclosure"))
         accessoryImageView.frame.origin = CGPoint(x: UIScreen.main.bounds.size.width - 32.0 - accessoryImageView.frame.size.width, y: 8.0)
+        let accessoryTapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
+        accessoryImageView.addGestureRecognizer(accessoryTapGesture)
         addSubview(accessoryImageView)
         
         if #available(iOS 9.0, *) {
@@ -124,6 +126,10 @@ open class EditableTagView: UIView {
             // TODO: Fallback on earlier versions
             // no need for this, no one is using iOS 8.0
         }
+    }
+    
+    public func text() -> String {
+        return textfield.text ?? ""
     }
     
     public func clearSubViews() {

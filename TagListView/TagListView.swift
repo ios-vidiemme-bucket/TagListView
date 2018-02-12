@@ -360,6 +360,7 @@ open class TagListView: UIView {
             addButton.lineColor = removeIconLineColor
             addButton.backgroundColor = UIColor(red: 0, green: 228/255, blue: 103/255, alpha: 1)
             addButton.clipsToBounds = true
+            addButton.isUserInteractionEnabled = false
             bottomView.addSubview(addButton)
         
             let addTagLabel = UILabel(frame: CGRect(x: tagViewHeight + 8.0, y: 3.0, width: bounds.size.width - tagViewHeight - 16.0, height: tagViewHeight - 6.0))
