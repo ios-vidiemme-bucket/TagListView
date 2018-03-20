@@ -70,6 +70,8 @@ open class EditableTagView: UIView {
     }
     
     private func setupViews() {
+        textfield.addTarget(self, action: #selector(textfieldTextDidChange), for: .editingChanged)
+        
         closeButton.frame = CGRect(x: 4.0, y: 2.0, width: 24.0, height: 24.0)
         closeButton.layer.cornerRadius = closeButton.frame.size.width / 2
         closeButton.lineWidth = 1
@@ -154,6 +156,10 @@ open class EditableTagView: UIView {
     
     @objc func removeButtonTapped() {
         delegate?.didTapRemove()
+    }
+    
+    @objc func textfieldTextDidChange() {
+        textfield.text = textfield.text?.replacingOccurrences(of: " ", with: "")
     }
 }
 
