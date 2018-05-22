@@ -87,7 +87,7 @@ open class EditableTagView: UIView {
         separatorView.backgroundColor = UIColor.init(red: 238/255, green: 238/255, blue: 238/255, alpha: 1)
         addSubview(separatorView)
         
-        accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "gray_disclosure"))
+        //accessoryImageView = UIImageView(image: #imageLiteral(resourceName: "gray_disclosure"))
         accessoryImageView.frame.origin = CGPoint(x: UIScreen.main.bounds.size.width - 32.0 - accessoryImageView.frame.size.width, y: 8.0)
         let accessoryTapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
         accessoryImageView.addGestureRecognizer(accessoryTapGesture)
