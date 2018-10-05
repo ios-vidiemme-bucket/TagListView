@@ -95,9 +95,9 @@ open class EditableTagView: UIView {
         
         if #available(iOS 9.0, *) {
             let stackView = UIStackView()
-            stackView.axis = UILayoutConstraintAxis.vertical
-            stackView.distribution = UIStackViewDistribution.equalSpacing
-            stackView.alignment = UIStackViewAlignment.top
+            stackView.axis = NSLayoutConstraint.Axis.vertical
+            stackView.distribution = UIStackView.Distribution.equalSpacing
+            stackView.alignment = UIStackView.Alignment.top
             stackView.spacing = 8.0
             
             stackView.translatesAutoresizingMaskIntoConstraints = false
