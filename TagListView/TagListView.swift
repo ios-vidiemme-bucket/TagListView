@@ -30,6 +30,10 @@ open class TagListView: UIView {
     
     public var editableTagDelegate : EditableTagViewDelegate?
     
+    public var editableTagText: String? {
+        return self.editableView?.tagNameTextField.text
+    }
+    
     open var addButton: UIButton? {
         return self.editableView?.addButton
     }
