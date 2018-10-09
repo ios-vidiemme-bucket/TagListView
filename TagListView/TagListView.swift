@@ -8,6 +8,12 @@
 
 import UIKit
 
+public protocol EditableTagViewDelegate {
+    func tagListDidTapLinkClient(tagsView: TagListView, tag: String?)
+    func tagListOnNewTagAdded(tagsView: TagListView, tag: String)
+    func didTapRemove()
+}
+
 @objc public protocol TagListViewDelegate {
     @objc optional func tagPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void
     @objc optional func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void
@@ -24,6 +30,13 @@ open class TagListView: UIView {
     
     public var editableTagDelegate : EditableTagViewDelegate?
     
+    open var addButton: UIButton? {
+        return self.editableView?.addButton
+    }
+    
+    open var removeButton: UIButton? {
+        return self.editableView?.removeButton
+    }
     
     @IBInspectable open dynamic var textColor: UIColor = UIColor.white {
         didSet {
@@ -228,9 +241,6 @@ open class TagListView: UIView {
         }
         
         linkedClients.append(client)
-        
-        editableTagView.linkedClients = linkedClients
-        
         rearrangeViews()
     }
     
@@ -243,8 +253,6 @@ open class TagListView: UIView {
             }
         }
         
-        editableTagView.linkedClients = linkedClients
-        
         rearrangeViews()
     }
     
@@ -252,13 +260,15 @@ open class TagListView: UIView {
         linkedClients.removeAll()
         
         linkedClients.append("Client name")
-        editableTagView.linkedClients = linkedClients
         rearrangeViews()
     }
     
-    public var bottomView: UIView = UIView()
-    public var editableTagView: EditableTagView = EditableTagView()
+    public weak var bottomView: UIStackView?
+    public var showsRightValues: Bool = false
     
+    fileprivate weak var editableView: TagListBottomView? {
+        return self.bottomView as? TagListBottomView
+    }
     // MARK: - Interface Builder
     
     open override func prepareForInterfaceBuilder() {
@@ -332,57 +342,73 @@ open class TagListView: UIView {
             tagViewHeight = 31
         }
         
-        if canShowAddButton {
-            let originY = tagViews.count == 0 ? (tagViewHeight + marginY) * CGFloat(1) : (tagViewHeight + marginY) * CGFloat(tagViews.count)
+        if self.canShowAddButton {
+            let isTagViewHidden = (self.bottomView as? TagListBottomView)?.tagCell.isHidden ?? true
             
-            editableTagView.clearSubViews()
-            editableTagView.frame = CGRect(x: 0.0, y: tagViews.count == 0 ? 0.0 : originY + 16.0, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count))
-            editableTagView.linkedClients = linkedClients
-            editableTagView.delegate = editableTagDelegate
-            editableTagView.isHidden = !addingTag
-            editableTagView.textfield.delegate = self
-            editableTagView.textfield.text = tempTag
-            
-            if editableTagView.isDescendant(of: self) == false {
-                addSubview(editableTagView)
+            if let bottomView = self.bottomView {
+                bottomView.removeFromSuperview()
             }
+            let bottom = TagListBottomView.fromXib()
+            self.addSubview(bottom)
+            bottom.addTitleButton.setTitle(self.addTagLabel, for: .normal)
+            bottom.translatesAutoresizingMaskIntoConstraints = false
+            bottom.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 8).isActive = true
+            bottom.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+            bottom.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+            self.bottomView = bottom
+            bottom.addDetailsLabels(labels: self.showsRightValues ? self.linkedClients : [])
+            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: bottom.frame.maxY + 40.0)
+            bottom.layoutIfNeeded()
+            bottom.showsRightValues = self.showsRightValues
+            bottom.eventHandler = self
             
-            bottomView.removeFromSuperview()
-            bottomView = UIView(frame: CGRect(x: 0.0, y: editableTagView.frame.origin.y + editableTagView.frame.size.height + 16.0, width: self.bounds.width, height: tagViewHeight))
-            //bottomView.isHidden = !enableRemoveButton
-        
-            let addButton = AddButton()
-            addButton.frame = CGRect(x: 4.0, y: 3.0, width: tagViewHeight - 6.0, height: tagViewHeight - 6.0)
-            addButton.layer.cornerRadius = addButton.frame.size.width / 2
-            addButton.lineWidth = removeIconLineWidth
-            addButton.iconSize = removeButtonIconSize
-            //addButton.isHidden = !enableRemoveButton
-            addButton.lineColor = removeIconLineColor
-            addButton.backgroundColor = UIColor(red: 0, green: 228/255, blue: 103/255, alpha: 1)
-            addButton.clipsToBounds = true
-            addButton.isUserInteractionEnabled = false
-            bottomView.addSubview(addButton)
-        
-            let addTagLabel = UILabel(frame: CGRect(x: tagViewHeight + 8.0, y: 3.0, width: bounds.size.width - tagViewHeight - 16.0, height: tagViewHeight - 6.0))
-            addTagLabel.text = self.addTagLabel
-            addTagLabel.textColor = UIColor.black
-            //addTagLabel.isHidden = !enableRemoveButton
-            bottomView.addSubview(addTagLabel)
-        
-            let bottomViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(bottomViewTapped))
-            bottomView.addGestureRecognizer(bottomViewTapGesture)
-        
-            addSubview(bottomView)
-        
-            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: originY + editableTagView.frame.size.height + bottomView.frame.size.height + 40.0)
+            if !isTagViewHidden {
+                bottom.onAddLabelSelected("")
+            }
         }
+//
+//            let originY = tagViews.count == 0 ? (tagViewHeight + marginY) * CGFloat(1) : (tagViewHeight + marginY) * CGFloat(tagViews.count)
+//
+//            editableTagView.clearSubViews()
+//            editableTagView.frame = CGRect(x: 0.0, y: tagViews.count == 0 ? 0.0 : originY + 16.0, width: frame.size.width, height: 26.0 * CGFloat(linkedClients.count))
+//            editableTagView.linkedClients = linkedClients
+//            editableTagView.delegate = editableTagDelegate
+//            editableTagView.isHidden = !addingTag
+//            editableTagView.textfield.delegate = self
+//            editableTagView.textfield.text = tempTag
+//
+//            bottomView.removeFromSuperview()
+//            bottomView = UIStackView(frame: CGRect(x: 0.0, y: editableTagView.frame.origin.y + editableTagView.frame.size.height + 16.0, width: self.bounds.width, height: tagViewHeight))
+//            //bottomView.isHidden = !enableRemoveButton
+//            bottomView.axis = .vertical
+//
+//            if !editableTagView.isDescendant(of: bottomView) {
+//                editableTagView.translatesAutoresizingMaskIntoConstraints = false
+//                editableTagView.heightAnchor.constraint(equalToConstant: tagViewHeight - 6.0).isActive = true
+//                bottomView.addArrangedSubview(editableTagView)
+//            }
+//
+//            self.addButtonViewToStackView()
+//
+//            let bottomViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(bottomViewTapped))
+//            bottomView.addGestureRecognizer(bottomViewTapGesture)
+//            bottomView.backgroundColor = .blue
+//            addSubview(bottomView)
+//
+//            bottomView.translatesAutoresizingMaskIntoConstraints = false
+//            bottomView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 8).isActive = true
+//            bottomView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+//            bottomView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+//            //bottomView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+//            bottomView.backgroundColor = .red
+//
+//            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: bottomView.frame.maxY + 40.0)
+//        }
         
         invalidateIntrinsicContentSize()
     }
     
     @objc func bottomViewTapped() {
-        editableTagView.isHidden = false
-        editableTagView.textfieldBecomeFirstResponder()
         addingTag = true
         
         rearrangeViews()
@@ -397,7 +423,8 @@ open class TagListView: UIView {
         }
         
         if canShowAddButton {
-            height += (editableTagView.frame.size.height + 20.0 + bottomView.frame.size.height + 20.0)
+            height += self.bottomView?.frame.size.height ?? 0
+            //height += (editableTagView.frame.size.height + 20.0 + (bottomView?.frame.size.height ?? 0) + 20.0)
         }
         
         return CGSize(width: frame.width, height: height)
@@ -492,7 +519,7 @@ open class TagListView: UIView {
         if let index = tagViews.index(where: {
             let labelText = ($0.titleLabel?.text)!
             let regex = try! NSRegularExpression(pattern: "(\\([0-9]+)\\)", options: NSRegularExpression.Options.caseInsensitive)
-            let range = NSMakeRange(0, labelText.characters.count)
+            let range = NSMakeRange(0, labelText.count)
             let labelTitle = regex.stringByReplacingMatches(in: labelText, options: [], range: range, withTemplate: "")
             return labelTitle.trimmingCharacters(in: .whitespacesAndNewlines) == oldTitle
         }) {
@@ -526,7 +553,6 @@ open class TagListView: UIView {
             view.removeFromSuperview()
         }
         
-        editableTagView.removeFromSuperview()
         tempTag = nil
         removeAllClients()
         tagViews = []
@@ -550,11 +576,30 @@ open class TagListView: UIView {
             delegate?.tagRemoveButtonPressed?(tagView.currentTitle ?? "", tagView: tagView, sender: self)
         }
     }
+    
+    public func resetEditableView() {
+        for c in self.linkedClients { self.removeClient(client: c) }
+        self.editableView?.addDetailsLabels(labels: [])
+        self.editableView?.tagNameTextField.text = ""
+        self.editableView?.tagCell.isHidden = true
+        self.rearrangeViews()
+    }
 }
 
 extension TagListView : UITextFieldDelegate {
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         self.tempTag = textField.text
+    }
+}
+
+extension TagListView: TagListBottomViewEventHandler {
+    
+    func onRightViewTapped(bottomView: TagListBottomView) {
+        self.editableTagDelegate?.tagListDidTapLinkClient(tagsView: self, tag: bottomView.tagNameTextField.text?.lowercased())
+    }
+    
+    func onTagNameChanged(bottomView: TagListBottomView, tag: String) {
+        self.editableTagDelegate?.tagListOnNewTagAdded(tagsView: self, tag: tag.lowercased())
     }
 }
