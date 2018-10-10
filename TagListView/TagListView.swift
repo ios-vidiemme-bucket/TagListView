@@ -399,7 +399,8 @@ open class TagListView: UIView {
         }
         
         if canShowAddButton {
-            height += self.bottomView?.frame.size.height ?? 0
+            height += self.bottomView?.frame.size.height ?? bottomCellHeight
+            height = height == 0 ? bottomCellHeight : height
             //height += (editableTagView.frame.size.height + 20.0 + (bottomView?.frame.size.height ?? 0) + 20.0)
         }
         

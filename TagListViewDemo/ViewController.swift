@@ -23,9 +23,11 @@ class ViewController: UIViewController, TagListViewDelegate, EditableTagViewDele
         biggestTagListView.canShowAddButton = true
         biggestTagListView.showsRightValues = false
         biggestTagListView.addTagLabel = "Add tag"
-        biggestTagListView.addTags(["all", "your", "tag", "are", "belong", "to", "us"])
         biggestTagListView.alignment = .left
         biggestTagListView.bottomCellHeight = 40
+        biggestTagListView.showVertical = true
+        biggestTagListView.addTags(["all", "your", "tag", "are", "belong", "to", "us"])
+
     }
     
     override func didReceiveMemoryWarning() {
