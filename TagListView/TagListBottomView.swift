@@ -25,6 +25,8 @@ class TagListBottomView: UIStackView {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     
+    @IBOutlet weak var tagHeightConstraint: NSLayoutConstraint?
+    @IBOutlet weak var addHeightConstraint: NSLayoutConstraint?
     weak var eventHandler: TagListBottomViewEventHandler?
     
     public var showsRightValues: Bool = false {
@@ -85,6 +87,7 @@ class TagListBottomView: UIStackView {
         guard self.tagCell.isHidden else { return }
         self.tagCell.isHidden = false
         self.tagCell.alpha = 0.0
+        self.tagHeightConstraint?.constant = self.addHeightConstraint?.constant ?? 100
         self.tagCell.layoutIfNeeded()
         self.layoutIfNeeded()
         DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {

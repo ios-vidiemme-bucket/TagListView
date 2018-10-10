@@ -19,11 +19,13 @@ class ViewController: UIViewController, TagListViewDelegate, EditableTagViewDele
         biggestTagListView.editableTagDelegate = self
         biggestTagListView.textFont = UIFont.systemFont(ofSize: 24)
         // it is also possible to add all tags in one go
+        biggestTagListView.enableRemoveButton = true
         biggestTagListView.canShowAddButton = true
-        biggestTagListView.showsRightValues = true
+        biggestTagListView.showsRightValues = false
         biggestTagListView.addTagLabel = "Add tag"
         biggestTagListView.addTags(["all", "your", "tag", "are", "belong", "to", "us"])
-        biggestTagListView.alignment = .right
+        biggestTagListView.alignment = .left
+        biggestTagListView.bottomCellHeight = 40
     }
     
     override func didReceiveMemoryWarning() {
