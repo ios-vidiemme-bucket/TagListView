@@ -18,13 +18,15 @@
 		1AD1770C1B6D73E70081F615 /* TagListView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AD176F41B6D73E70081F615 /* TagListView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1AD177141B6D74570081F615 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6076DE1AFED38F009EA00E /* TagView.swift */; };
 		1AD177151B6D745B0081F615 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6076E21AFED866009EA00E /* TagListView.swift */; };
-		787439492019D23C00E4349A /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787439472019D23C00E4349A /* AddButton.swift */; };
-		7874394A2019D23C00E4349A /* EditableTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787439482019D23C00E4349A /* EditableTagView.swift */; };
-		7874394B2019D27000E4349A /* EditableTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787439482019D23C00E4349A /* EditableTagView.swift */; };
-		7874394C2019D27700E4349A /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787439472019D23C00E4349A /* AddButton.swift */; };
+		47204A5D216CE83500C1B660 /* TagListBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47204A5B216CE83500C1B660 /* TagListBottomView.swift */; };
+		47204A5E216CE83500C1B660 /* TagListBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47204A5C216CE83500C1B660 /* TagListBottomView.xib */; };
+		47204A5F216CE86000C1B660 /* TagListBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47204A5C216CE83500C1B660 /* TagListBottomView.xib */; };
+		47204A60216CE86300C1B660 /* TagListBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47204A5B216CE83500C1B660 /* TagListBottomView.swift */; };
+		47204A63216CE91300C1B660 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47204A61216CE91300C1B660 /* AddButton.swift */; };
+		47204A64216CE91300C1B660 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47204A61216CE91300C1B660 /* AddButton.swift */; };
+		47204A65216CE91300C1B660 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47204A62216CE91300C1B660 /* CloseButton.swift */; };
+		47204A66216CE91300C1B660 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47204A62216CE91300C1B660 /* CloseButton.swift */; };
 		90A878531BA1EBA1001C8989 /* TagListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 90A878521BA1EBA1001C8989 /* TagListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FFBD46391C6E1AA60045684A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD46381C6E1AA60045684A /* CloseButton.swift */; };
-		FFBD463A1C6E1AB50045684A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD46381C6E1AA60045684A /* CloseButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,10 +65,11 @@
 		1A6076E21AFED866009EA00E /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagListView.swift; path = TagListView/TagListView.swift; sourceTree = SOURCE_ROOT; };
 		1AD176F41B6D73E70081F615 /* TagListView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TagListView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AD176F71B6D73E70081F615 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		787439472019D23C00E4349A /* AddButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddButton.swift; path = TagListView/AddButton.swift; sourceTree = SOURCE_ROOT; };
-		787439482019D23C00E4349A /* EditableTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditableTagView.swift; path = TagListView/EditableTagView.swift; sourceTree = SOURCE_ROOT; };
+		47204A5B216CE83500C1B660 /* TagListBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagListBottomView.swift; path = TagListView/TagListBottomView.swift; sourceTree = SOURCE_ROOT; };
+		47204A5C216CE83500C1B660 /* TagListBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TagListBottomView.xib; path = TagListView/TagListBottomView.xib; sourceTree = SOURCE_ROOT; };
+		47204A61216CE91300C1B660 /* AddButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddButton.swift; path = TagListView/AddButton.swift; sourceTree = SOURCE_ROOT; };
+		47204A62216CE91300C1B660 /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CloseButton.swift; path = TagListView/CloseButton.swift; sourceTree = SOURCE_ROOT; };
 		90A878521BA1EBA1001C8989 /* TagListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagListView.h; sourceTree = "<group>"; };
-		FFBD46381C6E1AA60045684A /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CloseButton.swift; path = ../TagListView/CloseButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,11 +134,12 @@
 		1A6076E41AFED91A009EA00E /* TagListView */ = {
 			isa = PBXGroup;
 			children = (
+				47204A61216CE91300C1B660 /* AddButton.swift */,
+				47204A62216CE91300C1B660 /* CloseButton.swift */,
 				1A6076DE1AFED38F009EA00E /* TagView.swift */,
-				787439482019D23C00E4349A /* EditableTagView.swift */,
 				1A6076E21AFED866009EA00E /* TagListView.swift */,
-				FFBD46381C6E1AA60045684A /* CloseButton.swift */,
-				787439472019D23C00E4349A /* AddButton.swift */,
+				47204A5B216CE83500C1B660 /* TagListBottomView.swift */,
+				47204A5C216CE83500C1B660 /* TagListBottomView.xib */,
 			);
 			name = TagListView;
 			sourceTree = "<group>";
@@ -215,7 +219,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Ela;
 				TargetAttributes = {
 					1A6076B81AFED303009EA00E = {
@@ -254,6 +258,7 @@
 			files = (
 				1A6076C41AFED303009EA00E /* Main.storyboard in Resources */,
 				1A6076C91AFED303009EA00E /* LaunchScreen.xib in Resources */,
+				47204A5F216CE86000C1B660 /* TagListBottomView.xib in Resources */,
 				1A6076C61AFED303009EA00E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47204A5E216CE83500C1B660 /* TagListBottomView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,11 +278,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFBD46391C6E1AA60045684A /* CloseButton.swift in Sources */,
-				7874394A2019D23C00E4349A /* EditableTagView.swift in Sources */,
+				47204A60216CE86300C1B660 /* TagListBottomView.swift in Sources */,
 				1A6076C11AFED303009EA00E /* ViewController.swift in Sources */,
 				1A6076BF1AFED303009EA00E /* AppDelegate.swift in Sources */,
-				787439492019D23C00E4349A /* AddButton.swift in Sources */,
+				47204A63216CE91300C1B660 /* AddButton.swift in Sources */,
+				47204A65216CE91300C1B660 /* CloseButton.swift in Sources */,
 				1A6076DF1AFED38F009EA00E /* TagView.swift in Sources */,
 				1A6076E31AFED866009EA00E /* TagListView.swift in Sources */,
 			);
@@ -286,11 +292,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFBD463A1C6E1AB50045684A /* CloseButton.swift in Sources */,
-				7874394B2019D27000E4349A /* EditableTagView.swift in Sources */,
+				47204A66216CE91300C1B660 /* CloseButton.swift in Sources */,
+				47204A5D216CE83500C1B660 /* TagListBottomView.swift in Sources */,
 				1AD177141B6D74570081F615 /* TagView.swift in Sources */,
-				7874394C2019D27700E4349A /* AddButton.swift in Sources */,
 				1AD177151B6D745B0081F615 /* TagListView.swift in Sources */,
+				47204A64216CE91300C1B660 /* AddButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,12 +342,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -369,7 +377,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -391,12 +399,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -417,7 +427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
@@ -431,6 +441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TagListViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "build.ela.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,6 +455,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TagListViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "build.ela.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
