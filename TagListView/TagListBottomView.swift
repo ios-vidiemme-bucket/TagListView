@@ -101,7 +101,7 @@ public class TagListBottomView: UIStackView {
 }
 
 extension TagListBottomView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.onTagNameChanged()
         return true
     }
