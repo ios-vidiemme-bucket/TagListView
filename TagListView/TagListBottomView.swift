@@ -13,14 +13,14 @@ protocol TagListBottomViewEventHandler: class {
     func onTagNameChanged(bottomView: TagListBottomView, tag: String)
 }
 
-class TagListBottomView: UIStackView {
+public class TagListBottomView: UIStackView {
     
     @IBOutlet weak var tagCell: UIStackView!
     @IBOutlet weak var addCell: UIStackView!
     @IBOutlet weak var addTitleButton: UIButton!
     @IBOutlet weak var rightStackView: UIStackView!
     @IBOutlet weak var dividerView: UIView!
-    @IBOutlet weak var tagNameTextField: UITextField!
+    @IBOutlet public weak var tagNameTextField: UITextField!
     
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
@@ -38,7 +38,7 @@ class TagListBottomView: UIStackView {
         }
     }
 
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         self.setupUI()
     }
@@ -101,7 +101,7 @@ class TagListBottomView: UIStackView {
 }
 
 extension TagListBottomView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.onTagNameChanged()
         return true
     }
