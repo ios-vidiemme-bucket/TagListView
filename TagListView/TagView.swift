@@ -98,12 +98,12 @@ open class TagView: UIButton {
         else if isSelected {
             backgroundColor = selectedBackgroundColor ?? tagBackgroundColor
             layer.borderColor = selectedBorderColor?.cgColor ?? borderColor?.cgColor
-            setTitleColor(selectedTextColor, for: UIControlState())
+            setTitleColor(selectedTextColor, for: UIControl.State())
         }
         else {
             backgroundColor = tagBackgroundColor
             layer.borderColor = borderColor?.cgColor
-            setTitleColor(textColor, for: UIControlState())
+            setTitleColor(textColor, for: UIControl.State())
         }
     }
     
@@ -162,7 +162,7 @@ open class TagView: UIButton {
     
     public init(title: String) {
         super.init(frame: CGRect.zero)
-        setTitle(title, for: UIControlState())
+        setTitle(title, for: UIControl.State())
         
         setupView()
     }
@@ -188,7 +188,7 @@ open class TagView: UIButton {
 
     override open var intrinsicContentSize: CGSize {
         let str = (titleLabel?.text ?? "") as NSString
-        var size = str.size(withAttributes: [NSAttributedStringKey.font: textFont])
+        var size = str.size(withAttributes: [NSAttributedString.Key.font: textFont])
         size.height = textFont.pointSize + paddingY * 2
         size.width += paddingX * 2
         if size.width < size.height {
