@@ -276,7 +276,7 @@ open class TagListView: UIView {
     public weak var bottomView: UIStackView?
     public var showsRightValues: Bool = false
     
-    fileprivate weak var editableView: TagListBottomView? {
+    public weak var editableView: TagListBottomView? {
         return self.bottomView as? TagListBottomView
     }
     // MARK: - Interface Builder
