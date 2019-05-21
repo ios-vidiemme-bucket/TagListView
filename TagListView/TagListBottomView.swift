@@ -11,6 +11,7 @@ import UIKit
 protocol TagListBottomViewEventHandler: class {
     func onRightViewTapped(bottomView: TagListBottomView)
     func onTagNameChanged(bottomView: TagListBottomView, tag: String)
+    func onTextDidChange(text: String)
 }
 
 public class TagListBottomView: UIStackView {
@@ -103,6 +104,14 @@ public class TagListBottomView: UIStackView {
 extension TagListBottomView: UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.onTagNameChanged()
+        return true
+    }
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text,
+            let textRange = Range(range, in: text) {
+            let updatedText = text.replacingCharacters(in: textRange, with: string)
+            self.eventHandler?.onTextDidChange(text: updatedText)
+        }
         return true
     }
 }

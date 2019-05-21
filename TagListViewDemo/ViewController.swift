@@ -58,5 +58,9 @@ class ViewController: UIViewController, TagListViewDelegate, EditableTagViewDele
     func didTapRemove() {
         
     }
+
+    func textDidChange(text: String) {
+        print("text did change: \(text)")
+    }
 }
 

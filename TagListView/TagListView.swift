@@ -12,6 +12,7 @@ public protocol EditableTagViewDelegate {
     func tagListDidTapLinkClient(tagsView: TagListView, tag: String?)
     func tagListOnNewTagAdded(tagsView: TagListView, tag: String)
     func didTapRemove()
+    func textDidChange(text: String)
 }
 
 @objc public protocol TagListViewDelegate {
@@ -578,5 +579,9 @@ extension TagListView: TagListBottomViewEventHandler {
     
     func onTagNameChanged(bottomView: TagListBottomView, tag: String) {
         self.editableTagDelegate?.tagListOnNewTagAdded(tagsView: self, tag: tag.lowercased())
+    }
+
+    func onTextDidChange(text: String) {
+        self.editableTagDelegate?.textDidChange(text: text)
     }
 }
