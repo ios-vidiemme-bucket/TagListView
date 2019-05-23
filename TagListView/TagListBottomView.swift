@@ -85,6 +85,10 @@ public class TagListBottomView: UIStackView {
     }
     
     @IBAction func onAddLabelSelected(_ sender: Any) {
+        addTag()
+    }
+
+    public func addTag() {
         guard self.tagCell.isHidden else { return }
         self.tagCell.isHidden = false
         self.tagCell.alpha = 0.0
@@ -96,6 +100,7 @@ public class TagListBottomView: UIStackView {
             self.tagCell.alpha = 1.0
         }
     }
+
     @IBAction func onRemoveButtonSelected(_ sender: Any) {
         (self.superview as? TagListView)?.resetEditableView()
     }

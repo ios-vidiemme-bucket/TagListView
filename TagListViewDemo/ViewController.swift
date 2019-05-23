@@ -21,6 +21,7 @@ class ViewController: UIViewController, TagListViewDelegate, EditableTagViewDele
         // it is also possible to add all tags in one go
         biggestTagListView.enableRemoveButton = true
         biggestTagListView.canShowAddButton = true
+        biggestTagListView.hideAddButton = true
         biggestTagListView.showsRightValues = false
         biggestTagListView.addTagLabel = "Add tag"
         biggestTagListView.alignment = .left
@@ -28,6 +29,9 @@ class ViewController: UIViewController, TagListViewDelegate, EditableTagViewDele
         biggestTagListView.showVertical = true
         biggestTagListView.addTags(["all", "your", "tag", "are", "belong", "to", "us"])
 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.biggestTagListView.editableView?.addTag()
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -32,6 +32,7 @@ open class TagListView: UIView {
     public var showVertical:Bool = false
     public var addingTag = false
     public var canShowAddButton = false
+    public var hideAddButton = false
     public var tempTag: String?
     public var addTagLabel: String = ""
     
@@ -371,8 +372,6 @@ open class TagListView: UIView {
             frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: bottom.frame.maxY + 40.0)
             bottom.addHeightConstraint?.constant = self.bottomCellHeight
             bottom.tagHeightConstraint?.constant = self.bottomCellHeight
-            bottom.addButton.layer.cornerRadius = (self.bottomCellHeight-10)/2
-            bottom.removeButton.layer.cornerRadius = (self.bottomCellHeight-10)/2
             bottom.layoutIfNeeded()
             bottom.showsRightValues = self.showsRightValues
             bottom.eventHandler = self
@@ -380,6 +379,8 @@ open class TagListView: UIView {
             if !isTagViewHidden {
                 bottom.onAddLabelSelected("")
             }
+
+            bottom.addCell.isHidden = hideAddButton
         }
         
         invalidateIntrinsicContentSize()
