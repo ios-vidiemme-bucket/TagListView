@@ -257,7 +257,7 @@ open class TagListView: UIView {
     }
     
     open func removeClient(client: String) {
-        if let index = linkedClients.index(where: {$0 == client}) {
+        if let index = linkedClients.firstIndex(where: {$0 == client}) {
             linkedClients.remove(at: index)
             
             if (linkedClients.count == 0) {
@@ -495,7 +495,7 @@ open class TagListView: UIView {
     }
     
     open func setTitle(_ title: String, oldTitle: String) {
-        if let index = tagViews.index(where: {
+        if let index = tagViews.firstIndex(where: {
             let labelText = ($0.titleLabel?.text)!
             let regex = try! NSRegularExpression(pattern: "(\\([0-9]+)\\)", options: NSRegularExpression.Options.caseInsensitive)
             let range = NSMakeRange(0, labelText.count)
@@ -518,7 +518,7 @@ open class TagListView: UIView {
     
     open func removeTagView(_ tagView: TagView) {
         tagView.removeFromSuperview()
-        if let index = tagViews.index(of: tagView) {
+        if let index = tagViews.firstIndex(of: tagView) {
             tagViews.remove(at: index)
             tagBackgroundViews.remove(at: index)
         }
